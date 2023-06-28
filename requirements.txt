@@ -1,0 +1,10 @@
+# main
+
+# tools
+pyyaml~=6.0 # yaml
+types-pyyaml~=6.0 # yaml types
+structlog~=23.1.0 # logging
+
+# linting and type checking
+pylint~=2.17.4 # Python code static checker
+pylint-pydantic~=0.1.8 # Pydantic plugin for pylint
