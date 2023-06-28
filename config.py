@@ -28,8 +28,7 @@ class GlobalConfig():
     it will look inside the config yaml for "my_option" as well as for environment variables in the format
     "MY_OPTION".
     """
-    uname: str = ''
-    pword: str = ''
+    notion_token: str = ''
 
 
 def load_yaml_config_file() -> dict[str, Any]:

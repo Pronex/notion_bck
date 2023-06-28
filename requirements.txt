@@ -1,4 +1,5 @@
 # main
+requests~=2.31.0 # rest requests
 
 # tools
 pyyaml~=6.0 # yaml

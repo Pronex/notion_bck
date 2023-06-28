@@ -1,0 +1,22 @@
+{
+    "python.defaultInterpreterPath": "${workspaceRoot}/.venv/bin/python3.10",
+    "python.analysis.extraPaths": [
+        ".venv",
+        ".venv/lib/python3.10/site-packages"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": [
+        "--max-line-length=120",
+        "--load-plugins pylint_pydantic"
+    ],
+    "editor.formatOnSave": true,
+    "python.formatting.provider": "yapf",
+    "python.formatting.yapfArgs": [
+        "--style={based_on_style: google, column_limit: 120, indent_width: 4}",
+    ],
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--strict"
+    ]
+}
