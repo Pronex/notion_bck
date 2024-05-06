@@ -8,8 +8,8 @@ Author: pronex
 import os
 import datetime
 
-import requests
 import json
+import requests
 
 import structlog
 
@@ -32,6 +32,9 @@ BCK_FOLDER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), BCK_F
 # main
 # following https://notionbackups.com/blog/automated-notion-backup-api
 def backup() -> None:
+    """
+    Run the backup process.
+    """
     # setup folder
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
     folder = BCK_FOLDER_PATH + timestamp
@@ -39,19 +42,21 @@ def backup() -> None:
     os.mkdir(folder)
 
     # search all pages that can be found
-    response = requests.post('https://api.notion.com/v1/search', headers=headers)
+    response = requests.post('https://api.notion.com/v1/search', headers=headers, timeout=10)
 
     # retrieve block children
     for block in response.json()['results']:
-        with open(f'{folder}/{block["id"]}.json', 'w') as file:
+        with open(f'{folder}/{block["id"]}.json', 'w', encoding="utf-8") as file:
             file.write(json.dumps(block))
 
-        child_blocks = requests.get(f'https://api.notion.com/v1/blocks/{block["id"]}/children', headers=headers)
+        child_blocks = requests.get(f'https://api.notion.com/v1/blocks/{block["id"]}/children',
+                                    headers=headers, timeout=10)
         if child_blocks.json()['results']:
             os.mkdir(folder + f'/{block["id"]}')
 
             for child in child_blocks.json()['results']:
-                with open(f'{folder}/{block["id"]}/{child["id"]}.json', 'w') as file:
+                with open(f'{folder}/{block["id"]}/{child["id"]}.json',
+                          'w', encoding="utf-8") as file:
                     file.write(json.dumps(child))
 
 
@@ -60,6 +65,6 @@ if __name__ == "__main__":
     _logger.info("Starting ...")
     try:
         backup()
-    except:
+    except: # pylint: disable=bare-except
         _logger.error("Backup failed!")
     _logger.info("Finished.")
